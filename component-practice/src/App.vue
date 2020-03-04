@@ -2,20 +2,20 @@
   <div id="app">
     <Header />
     <AddTask @add-task="addTask"/>
-    <Child v-bind:task="task" @del-item="deleteTask"/>
+    <TaskList v-bind:task="task" @del-item="deleteTask"/>
   </div>
 </template>
 
 <script>
 import Header from "./components/layout/Header"
-import Child from "./components/Child"
+import TaskList from "./components/TaskList"
 import AddTask from "./components/AddTask"
 import axios from "axios"
 
 export default {
   name: 'App',
   components: {
-    Child,
+    TaskList,
     Header,
     AddTask
   },

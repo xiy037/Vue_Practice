@@ -6,11 +6,6 @@
       "complete": false
     },
     {
-      "id": 2,
-      "content": "Spring Data JPA",
-      "complete": true
-    },
-    {
       "content": "Java Lambda Expression",
       "complete": false,
       "id": 4
@@ -19,6 +14,21 @@
       "content": "Spring MVC",
       "complete": false,
       "id": 5
+    },
+    {
+      "content": "LocalForage",
+      "complete": false,
+      "id": 6
+    },
+    {
+      "content": "Ant Design Vue",
+      "complete": false,
+      "id": 7
+    },
+    {
+      "content": "Less",
+      "complete": false,
+      "id": 8
     }
   ]
 }

@@ -3,17 +3,17 @@
     Tasks Content
     <div v-for="item in task" :key="item.id" class="task">
     <div class="item1">task:</div>
-    <GrandChild v-bind:item="item" class="item2" v-on:del-item="$emit('del-item', item.id)"/>
+    <Task v-bind:item="item" class="item2" v-on:del-item="$emit('del-item', item.id)"/>
     </div>
   </div>
 </template>
 <script>
-import GrandChild from "../components/GrandChild"
+import Task from "../components/Task"
 
 export default {
-  name: "Child",
+  name: "TaskList",
   components: {
-    GrandChild
+    Task
   },
   props: ["task"]
 };

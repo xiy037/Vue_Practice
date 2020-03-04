@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: "GrandChild",
+  name: "Task",
   props: ["item"],
   methods: {
     markComplete() {
