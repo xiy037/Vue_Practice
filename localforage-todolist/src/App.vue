@@ -32,13 +32,14 @@ export default {
   methods: {
     deleteTask(id) {
       this.task = this.task.filter(x => x.id !== id);
+      //也可以传index，然后用splice来删除。
     },
     addTask(newItem) {
       this.task.push(newItem);
     },
     markComplete(index) {
       this.task[index].complete = !this.task[index].complete;
-    //这里为什么updated()不自动调用呢？
+    //这里为什么updated()不自动调用呢？大概不是mutation method，所以不监测？
     localforage.setItem("taskList", this.task).then(value => {
       console.log(value);
     });
