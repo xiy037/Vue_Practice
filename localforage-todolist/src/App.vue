@@ -11,6 +11,10 @@ import TaskList from "./components/TaskList";
 import AddTask from "./components/AddTask";
 import localforage from "localforage";
 
+const taskStore = localforage.createInstance({
+  name: "vue-data",
+  storeName: "taskList"
+});
 export default {
   name: "App",
   components: {
@@ -23,7 +27,7 @@ export default {
       task: [
         {
           id: 2,
-          content: "task two",
+          content: "default task",
           complete: false
         }
       ]
@@ -32,33 +36,31 @@ export default {
   methods: {
     deleteTask(id) {
       this.task = this.task.filter(x => x.id !== id);
-      //也可以传index，然后用splice来删除。
+      taskStore.removeItem(id);
     },
     addTask(newItem) {
       this.task.push(newItem);
+      taskStore.setItem(newItem.id, newItem).then(val => console.log(val));
     },
     markComplete(index) {
       this.task[index].complete = !this.task[index].complete;
-    //这里为什么updated()不自动调用呢？大概不是mutation method，所以不监测？
-    localforage.setItem("taskList", this.task).then(value => {
-      console.log(value);
-    });
+      let itemId = this.task[index].id;
+      taskStore.setItem(itemId, this.task[index]).then(value => {
+        console.log(value);
+      });
     }
   },
   created() {
-    localforage
-      .getItem("taskList")
-      .then(value => {
-        if (value !== null) {
-          this.task = value;
-        }
-      })
-      .catch(err => console.log(err));
-  },
-  updated() {
-    console.log("update");
-    localforage.setItem("taskList", this.task).then(value => {
-      console.log(value);
+    taskStore.length().then(len => {
+      console.log(len);
+      if (len > 0) {
+        taskStore.iterate((value, key) => {
+          const obj = { id: key };
+          obj.complete = value.complete;
+          obj.content = value.content;
+          this.task.push(obj);
+        });
+      }
     });
   }
 };
