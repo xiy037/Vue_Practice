@@ -52,7 +52,6 @@ export default {
   },
   created() {
     taskStore.length().then(len => {
-      console.log(len);
       if (len > 0) {
         taskStore.iterate((value, key) => {
           const obj = { id: key };
