@@ -9,12 +9,8 @@
 import Header from "./components/layout/Header";
 import TaskList from "./components/TaskList";
 import AddTask from "./components/AddTask";
-import localforage from "localforage";
+import {storage} from "./service/service";
 
-const taskStore = localforage.createInstance({
-  name: "vue-data",
-  storeName: "taskList"
-});
 export default {
   name: "App",
   components: {
@@ -36,31 +32,23 @@ export default {
   methods: {
     deleteTask(id) {
       this.task = this.task.filter(x => x.id !== id);
-      taskStore.removeItem(id);
+      storage.delete(id);
     },
     addTask(newItem) {
       this.task.push(newItem);
-      taskStore.setItem(newItem.id, newItem).then(val => console.log(val));
+      storage.save(newItem);
     },
     markComplete(index) {
       this.task[index].complete = !this.task[index].complete;
       let itemId = this.task[index].id;
-      taskStore.setItem(itemId, this.task[index]).then(value => {
-        console.log(value);
-      });
+      // taskStore.setItem(itemId, this.task[index]).then(value => {
+      //   console.log(value);
+      // });
+      storage.changeStatus(itemId);
     }
   },
   created() {
-    taskStore.length().then(len => {
-      if (len > 0) {
-        taskStore.iterate((value, key) => {
-          const obj = { id: key };
-          obj.complete = value.complete;
-          obj.content = value.content;
-          this.task.push(obj);
-        });
-      }
-    });
+    storage.getAll(this.task);
   }
 };
 </script>
