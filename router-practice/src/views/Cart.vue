@@ -1,7 +1,13 @@
 <template>
   <div>
     Shopping cart
-    <CartSearch />
+    <CartSearch v-if="showSearch" @hide="hideFn">
+      <div slot="notes" slot-scope="search">
+        <span class="slot-notes">slot demo for "notes"</span>
+        <div>{{search.item}}</div>
+      </div>
+    </CartSearch>
+    <a-button v-else @click="showFn">Show Search</a-button>
 
     <a-table :columns="cols" :dataSource="shoppingList" rowKey="id">
       <span slot="action" slot-scope="record">
@@ -13,7 +19,6 @@
 <script>
 import CartSearch from "@/components/CartSearch.vue";
 //用antd的tabale，cols中的dataIndex对应dataSource内的属性名
-//scopedSlots: {customRender: "action"}表明这个项可以自定义显示, slot-scope表示拿到的每个item
 
 export default {
   name: "Cart",
@@ -44,7 +49,7 @@ export default {
         {
           title: "action",
           key: "action",
-          scopedSlots: {customRender: "action"}
+          scopedSlots: { customRender: "action" }
         }
       ],
       shoppingList: [
@@ -80,14 +85,26 @@ export default {
           count: 1,
           price: 199
         }
-      ]
+      ],
+      showSearch: true
     };
   },
   methods: {
-    deleteItem(item) {
-      let id = item.id
-      this.shoppingList = this.shoppingList.filter((el) => el.id !== id);
+    deleteItem(index) {
+      this.shoppingList.splice(index, 1);
+    },
+    hideFn() {
+      this.showSearch = false;
+    },
+    showFn() {
+      this.showSearch = true;
     }
   }
 };
 </script>
+<style scoped lang="less">
+.slot-notes {
+  color: white;
+  background-color: #2c3e50;
+}
+</style>
