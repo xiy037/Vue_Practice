@@ -4,8 +4,10 @@
       <a-layout-header class="header"> 
         <div class="logo">VueShop</div>
         <router-link class="nav" to="/">Home | </router-link>
+        <router-link class="nav" to="/cart">Cart | </router-link>
         <router-link class="nav" to="/about">About | </router-link>
         <router-link class="nav" to="/contact">Contact</router-link>
+    
       </a-layout-header>
 
       <a-layout-content> 
