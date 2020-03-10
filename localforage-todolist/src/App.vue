@@ -1,9 +1,12 @@
 <template>
   <div id="app">
-    <Header />
     <SearchTag @search-tag="onTagSearch" @clear-search="listAll"/>
+    <Header />
     <AddTask @add-task="addTask" />
-    <TaskList v-bind:task="newTask" @del-item="deleteTask" @mark-complete="markComplete" />
+    <TaskList v-bind:task="newTask" 
+    @del-item="deleteTask" 
+    @mark-complete="markComplete" 
+    @del-tag="toggleTag"/>
   </div>
 </template>
 <script>
@@ -23,26 +26,23 @@ export default {
   },
   data() {
     return {
-      task: [
-        {
-          id: 2,
-          content: "default task",
-          complete: false,
-          tag: ["java", "JS"]
-        }
-      ],
+      task: [],
       newTask: []
     };
   },
   methods: {
     deleteTask(id) {
-      this.newTask = this.task.filter(x => x.id !== id);
+      this.newTask = this.newTask.filter(x => x.id !== id);
       storage.delete(id);
     },
     addTask(newItem) {
       this.task.push(newItem);
       this.newTask = this.task;
       storage.save(newItem);
+    },
+    toggleTag(item) {
+      storage.delete(item.id);
+      storage.save(item);
     },
     markComplete(index) {
       this.newTask[index].complete = !this.newTask[index].complete;

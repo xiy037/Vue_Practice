@@ -1,7 +1,7 @@
 <template>
   <div class="search-container">
     <a-input-search placeholder="Search tag here" class="search-box" @search="onSearch" v-model="input"/>
-    <a-button @click="clearInput">Clear</a-button>
+    <a-button class="search-btn" @click="clearInput">Clear</a-button>
   </div>
 </template>
 <script>
@@ -25,7 +25,14 @@ export default {
 }
 </script>
 <style scoped>
+.search-container {
+  display: flex;
+  border: 1px solid #405872;
+}
 .search-box {
-  width: 300px;
+  width: 80%;
+}
+.search-btn {
+  width: 20%;
 }
 </style>

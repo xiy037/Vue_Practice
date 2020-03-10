@@ -1,9 +1,13 @@
 <template>
   <div class="task-container">
     Tasks Content
-    <div v-for="(item, index) in task" :key="item.id" class="task">
+    <div v-for="(item, index) in task" :key="item.index" class="task">
     <div class="item1">task:</div>
-    <Task v-bind:item="item" :index="index" class="item2" v-on:del-item="$emit('del-item', item.id)" @mark-complete="$emit('mark-complete', index)"/>
+    <Task v-bind:item="item" :index="index" class="item2"
+     v-on:del-item="$emit('del-item', item.id)" 
+     @mark-complete="$emit('mark-complete', index)"
+     @del-tag="$emit('del-tag', item)"
+    />
     </div>
   </div>
 </template>

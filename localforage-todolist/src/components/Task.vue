@@ -8,7 +8,7 @@
     />
     <div class="item" v-bind:class='{"is-complete":item.complete}'>{{item.content}}</div>
     <div class="item2">
-      <a-tag v-for="t in item.tag" :key="t.index">{{t}}</a-tag>
+      <a-tag closable v-for="t in item.tag" :key="t.index" @close="deleteTag(t)"> {{t}} </a-tag>
     </div>
     <a-button class="item1" v-on:click="$emit('del-item', item.id)">delete</a-button>
   </div>
@@ -17,7 +17,13 @@
 <script>
 export default {
   name: "Task",
-  props: ["item", "index"]
+  props: ["item", "index"],
+  methods: {
+    deleteTag(t) {
+      this.item.tag = this.item.tag.filter((el) => el !== t);
+      this.$emit("del-tag", this.item);
+    }
+  }
 };
 </script>
 <style scoped>

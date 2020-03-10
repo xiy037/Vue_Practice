@@ -1,9 +1,9 @@
 <template>
   <a-form layout="inline">
-    <a-form-item>
+    <a-form-item label="Task:">
       <a-input type="text" name="taskInput" placeholder="Add Task..." v-model="input" />
     </a-form-item>
-     <a-form-item>
+     <a-form-item label="Tags:">
       <a-input type="text" name="tagInput" placeholder="Add tag..." v-model="inputTag" />
     </a-form-item>
     <a-form-item>
@@ -45,6 +45,8 @@ export default {
 </script>
 <style scoped>
 form {
-  background-color: #8fd6b8;
+  background-color: #41b883;
+  display: flex;
+  flex-direction: row;
 }
 </style>
