@@ -7,6 +7,7 @@
      v-on:del-item="$emit('del-item', item.id)" 
      @mark-complete="$emit('mark-complete', index)"
      @del-tag="$emit('del-tag', item)"
+     @add-tag-only="$emit('add-tag-only', item)"
     />
     </div>
   </div>

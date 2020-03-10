@@ -6,7 +6,8 @@
     <TaskList v-bind:task="newTask" 
     @del-item="deleteTask" 
     @mark-complete="markComplete" 
-    @del-tag="toggleTag"/>
+    @del-tag="toggleTag"
+    @add-tag-only="toggleTag"/>
   </div>
 </template>
 <script>
