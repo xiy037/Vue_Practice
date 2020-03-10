@@ -36,8 +36,7 @@ export default {
       storage.delete(id);
     },
     addTask(newItem) {
-      this.task.push(newItem);
-      this.newTask = this.task;
+      this.newTask.push(newItem);
       storage.save(newItem);
     },
     toggleTag(item) {

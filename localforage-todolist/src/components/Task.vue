@@ -8,7 +8,7 @@
     />
     <div class="item" v-bind:class='{"is-complete":item.complete}'>{{item.content}}</div>
     <div class="item2">
-      <a-tag closable v-for="t in item.tag" :key="t.index" @close="deleteTag(t)"> {{t}} </a-tag>
+        <a-tag v-for="t in item.tag" :key="t.index" closable visible @close="deleteTag(t)"> {{t}} </a-tag>
     </div>
     <a-button class="item1" v-on:click="$emit('del-item', item.id)">delete</a-button>
   </div>
