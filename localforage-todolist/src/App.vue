@@ -8,6 +8,7 @@
     @mark-complete="markComplete" 
     @del-tag="toggleTag"
     @add-tag-only="toggleTag"/>
+    <div class="alert-box" v-if="noResult">No Results Found.</div>
   </div>
 </template>
 <script>
@@ -28,7 +29,8 @@ export default {
   data() {
     return {
       task: [],
-      newTask: []
+      newTask: [],
+      noResult: false
     };
   },
   methods: {
@@ -39,7 +41,8 @@ export default {
       storage.delete(id);
     },
     addTask(newItem) {
-      this.newTask.push(newItem);
+      this.task.push(newItem);
+      this.newTask = this.task;
       storage.save(newItem);
     },
     toggleTag(item) {
@@ -64,6 +67,13 @@ export default {
     storage.getAll(this.task);
     //筛选tag的时候newTask就可以接filter之后的数据
     this.newTask = this.task;
+  },
+  updated() {
+    if (this.newTask.length === 0) {
+        this.noResult = true;
+      } else {
+        this.noResult = false;
+      }
   }
 };
 </script>
@@ -78,5 +88,10 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  .alert-box {
+    padding: 10px;
+    background-color: #41b883;
+    color: white;
+  }
 }
 </style>

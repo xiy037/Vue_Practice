@@ -8,7 +8,9 @@
     />
     <div class="item" v-bind:class="{'is-complete':item.complete}">{{item.content}}</div>
     <div class="item2">
-      <a-tag v-for="t in item.tag" :key="t.index" closable visible @close="deleteTag(t)">{{t}}</a-tag>
+      <div v-if="!(item.tag.length === 1 && item.tag[0] === '')">
+        <a-tag v-for="t in item.tag" :key="t.index" closable visible @close="deleteTag(t)">{{t}}</a-tag>
+      </div>
       <a-input
         v-if="inputVisible"
         ref="input"
@@ -53,17 +55,17 @@ export default {
       });
     },
     handleInputConfirm() {
-        const inputValue = this.inputValue;
-        let tags = this.item.tag;
-        if (inputValue && tags.indexOf(inputValue) === -1) {
-          this.item.tag.push(inputValue);
-        }
-        Object.assign(this, {
-          inputVisible: false,
-          inputValue: '',
-        });
-        this.$emit('add-tag-only', this.item)
-      },
+      const inputValue = this.inputValue;
+      let tags = this.item.tag;
+      if (inputValue && tags.indexOf(inputValue) === -1) {
+        this.item.tag.push(inputValue);
+      }
+      Object.assign(this, {
+        inputVisible: false,
+        inputValue: ""
+      });
+      this.$emit("add-tag-only", this.item);
+    }
   }
 };
 </script>
