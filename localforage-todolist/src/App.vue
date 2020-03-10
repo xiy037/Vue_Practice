@@ -32,7 +32,9 @@ export default {
   },
   methods: {
     deleteTask(id) {
+      //newTask删除为了保证显示，task删除为了保证同步所有数据，这样listAll之后不会出现滞后
       this.newTask = this.newTask.filter(x => x.id !== id);
+      this.task = this.task.filter(x => x.id !== id);
       storage.delete(id);
     },
     addTask(newItem) {
