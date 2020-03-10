@@ -3,6 +3,9 @@
     <a-form-item>
       <a-input type="text" name="taskInput" placeholder="Add Task..." v-model="input" />
     </a-form-item>
+     <a-form-item>
+      <a-input type="text" name="tagInput" placeholder="Add tag..." v-model="inputTag" />
+    </a-form-item>
     <a-form-item>
       <a-button @click="addItem">Add</a-button>
     </a-form-item>
@@ -14,7 +17,9 @@ export default {
   name: "AddTask",
   data() {
     return {
-      input: ""
+      input: "",
+      inputTag: "",
+      tags: []
     };
   },
   methods: {
@@ -23,9 +28,13 @@ export default {
         const newItem = {
           id: uuidv4(),
           content: this.input,
-          complete: false
+          complete: false,
         };
+        this.tags = this.inputTag.split(", ");
+        newItem.tag = this.tags;
         this.input = "";
+        this.inputTag = "";
+        this.tags = [];
         this.$emit("add-task", newItem);
       } else {
         alert("Please Enter Task First!")

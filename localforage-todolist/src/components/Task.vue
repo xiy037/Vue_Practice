@@ -1,7 +1,15 @@
 <template>
   <div class="item-container">
-    <input class="item1" type="checkbox" v-on:change="$emit('mark-complete', index)" :checked="item.complete"/>
+    <input
+      class="item1"
+      type="checkbox"
+      v-on:change="$emit('mark-complete', index)"
+      :checked="item.complete"
+    />
     <div class="item" v-bind:class='{"is-complete":item.complete}'>{{item.content}}</div>
+    <div class="item2">
+      <a-tag v-for="t in item.tag" :key="t.index">{{t}}</a-tag>
+    </div>
     <a-button class="item1" v-on:click="$emit('del-item', item.id)">delete</a-button>
   </div>
 </template>
@@ -21,8 +29,13 @@ export default {
 .item1 {
   flex: 1;
 }
+.item2 {
+  flex: 2;
+  display: flex;
+  justify-items: flex-start;
+}
 .item {
-  flex: 4;
+  flex: 3;
   text-align: left;
   color: #41b883;
 }

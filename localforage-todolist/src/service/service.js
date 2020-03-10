@@ -7,19 +7,20 @@ const taskStore = localforage.createInstance({
 
 const storage = {
   getAll : (arr) => {
-    taskStore.length().then(len => {
+      taskStore.length().then(len => {
       if (len > 0) {
         taskStore.iterate((value, key) => {
           const obj = { id: key };
           obj.complete = value.complete;
           obj.content = value.content;
+          obj.tag = value.tag;
           arr.push(obj);
         });
       }
     });
   },
   save : (newItem) => {
-    taskStore.setItem(newItem.id, newItem).then(val => console.log(val));
+   taskStore.setItem(newItem.id, newItem).then(val => console.log(val));
   },
   delete : (id) => {
     taskStore.removeItem(id);
