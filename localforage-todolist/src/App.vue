@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <SearchTag @search-tag="onTagSearch" @clear-search="listAll" />
+    <SearchTag @search-content="onContentSearch" @clear-search="listAll" />
     <Header />
     <AddTask @add-task="addTask" />
     <a-layout>
       <a-layout-sider id="app-sider">
         <div>
           <h2>Tags</h2>
-          <a-button class="tag-btn" @click="listAll">All</a-button>
+          <a-button class="tag-btn" @click="listAll" shape="round">All</a-button>
           <a-button
             class="tag-btn"
             v-for="(value, name) in existedTags"
@@ -17,8 +17,8 @@
         </div>
         <div>
           <h2>Status</h2>
-          <a-button class="tag-btn" type="dashed" @click="showCompletedTasks">Complete</a-button>
-          <a-button class="tag-btn" type="dashed" @click="showActiveTasks">Active</a-button>
+          <a-button class="status-btn" type="dashed" @click="showCompletedTasks">Complete</a-button>
+          <a-button class="status-btn" type="dashed" @click="showActiveTasks">Active</a-button>
         </div>
       </a-layout-sider>
       <a-layout-content id="app-content">
@@ -78,9 +78,9 @@ export default {
       let itemId = this.newTask[index].id;
       storage.changeStatus(itemId);
     },
-    onTagSearch(val) {
+    onContentSearch(val) {
       this.newTask = this.task.filter(el => {
-        return el.tag.includes(val);
+        return el.content.includes(val);
       });
     },
     listAll() {
@@ -160,7 +160,11 @@ export default {
       color: #41b883;
     }
     .tag-btn {
+      margin: 5px;
+    }
+    .status-btn {
       margin: 10px;
+      width: 80%;
     }
   }
   #app-content {
