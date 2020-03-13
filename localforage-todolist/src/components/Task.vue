@@ -10,6 +10,7 @@
     <div v-else class="item">
       <a-input
       type="text"
+      ref="content"
       :defaultValue="defaultTask"
       @change="editTask"
       @blur="closeEdit"
@@ -100,6 +101,9 @@ export default {
     },
     toggleEditStatus() {
       this.isContent = false;
+       this.$nextTick(function() {
+        this.$refs.content.focus();
+      });
     },
     editTask(e) {
       this.inputTask = e.target.value;
