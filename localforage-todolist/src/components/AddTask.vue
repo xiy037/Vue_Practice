@@ -1,6 +1,6 @@
 <template>
-<div>
-  <a-button  @click="showModal"><a-icon type="plus" />New Task</a-button>
+<div class="add-task-container">
+  <a-button  class="add-btn" @click="showModal"><a-icon type="plus" />New Task</a-button>
   <a-modal title="New Task" v-model="visible" @ok="addItem">
   <a-form layout="inline">
     <a-form-item label="Task:">
@@ -51,5 +51,15 @@ export default {
 };
 </script>
 <style scoped>
-
+.add-task-container {
+  padding: 0 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+.add-btn {
+  color: #41b883;
+  font-weight: 600;
+  border: none;
+  background: transparent;
+}
 </style>

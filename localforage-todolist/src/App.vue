@@ -27,8 +27,7 @@
           v-bind:task="newTask"
           @del-item="deleteTask"
           @mark-complete="markComplete"
-          @del-tag="toggleTag"
-          @add-tag-only="toggleTag"
+          @update-task="updateTask"
         />
         <div class="alert-box" v-if="noResult">No Results Found.</div>
       </a-layout-content>
@@ -69,7 +68,7 @@ export default {
       this.newTask = this.task;
       storage.save(newItem);
     },
-    toggleTag(item) {
+    updateTask(item) {
       storage.delete(item.id);
       storage.save(item);
     },

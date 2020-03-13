@@ -1,19 +1,20 @@
 <template>
   <div class="task-container">
-    Tasks Content
     <div v-for="(item, index) in task" :key="item.index" class="task">
-    <div class="item1">No.{{index+1}}</div>
-    <Task v-bind:item="item" :index="index" class="item2"
-     v-on:del-item="$emit('del-item', item.id)" 
-     @mark-complete="$emit('mark-complete', index)"
-     @del-tag="$emit('del-tag', item)"
-     @add-tag-only="$emit('add-tag-only', item)"
-    />
+      <div class="item1">No.{{index+1}}</div>
+      <Task
+        v-bind:item="item"
+        :index="index"
+        class="item2"
+        v-on:del-item="$emit('del-item', item.id)"
+        @mark-complete="$emit('mark-complete', index)"
+        @update-task="$emit('update-task', item)"
+      />
     </div>
   </div>
 </template>
 <script>
-import Task from "../components/Task"
+import Task from "../components/Task";
 
 export default {
   name: "TaskList",
