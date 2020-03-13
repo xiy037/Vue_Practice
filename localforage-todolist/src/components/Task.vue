@@ -12,7 +12,7 @@
       type="text"
       :defaultValue="defaultTask"
       @change="editTask"
-      @blur="confirmEdit"
+      @blur="closeEdit"
       @keyup.enter="confirmEdit"
       ></a-input>
     </div>
@@ -29,7 +29,7 @@
         :style="{ width: '78px' }"
         :value="inputTagValue"
         @change="handleInputChange"
-        @blur="handleInputConfirm"
+        @blur="handleInputClose"
         @keyup.enter="handleInputConfirm"
       />
       <a-tag v-else @click="showInput" style="background: #fff; borderStyle: dashed;">
@@ -69,6 +69,7 @@ export default {
   methods: {
     deleteTag(t) {
       this.item.tag = this.item.tag.filter(el => el !== t);
+       this.$emit("update-task", this.item);
     },
     handleInputChange(e) {
       this.inputTagValue = e.target.value;
@@ -77,6 +78,12 @@ export default {
       this.inputTagVisible = true;
       this.$nextTick(function() {
         this.$refs.input.focus();
+      });
+    },
+    handleInputClose() {
+        Object.assign(this, {
+        inputTagVisible: false,
+        inputTagValue: ""
       });
     },
     handleInputConfirm() {
@@ -89,6 +96,7 @@ export default {
         inputTagVisible: false,
         inputTagValue: ""
       });
+       this.$emit("update-task", this.item);
     },
     toggleEditStatus() {
       this.isContent = false;
@@ -96,19 +104,21 @@ export default {
     editTask(e) {
       this.inputTask = e.target.value;
     },
+    closeEdit() {
+      this.isContent = true;
+      this.inputTask = "";
+    },
     confirmEdit() {
       if (this.inputTask.trim() !== "") {
         this.item.content = this.inputTask;
       }
       this.isContent = true;
       this.inputTask = "";
+      this.$emit("update-task", this.item);
     }
   },
   created() {
     this.defaultTask = this.item.content;
-  },
-  updated() {
-    this.$emit("update-task", this.item);
   }
 };
 </script>

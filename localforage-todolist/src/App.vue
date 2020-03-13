@@ -69,6 +69,7 @@ export default {
       storage.save(newItem);
     },
     updateTask(item) {
+      console.log("update task")
       storage.delete(item.id);
       storage.save(item);
     },
