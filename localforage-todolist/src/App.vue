@@ -2,7 +2,7 @@
   <div id="app">
     <SearchTag @search-content="onContentSearch" @clear-search="listAll" />
     <Header />
-    <AddTask @add-task="addTask" />
+
     <a-layout>
       <a-layout-sider id="app-sider">
         <div>
@@ -22,6 +22,7 @@
         </div>
       </a-layout-sider>
       <a-layout-content id="app-content">
+        <AddTask @add-task="addTask" />
         <TaskList
           v-bind:task="newTask"
           @del-item="deleteTask"
@@ -113,15 +114,18 @@ export default {
       return allTags;
     },
     tasksWithStatus() {
-      const allTasks = this.task.reduce((prev, curr) => {
-        if (curr.complete) {
-          prev.complete.push(curr);
-        } else {
-          prev.active.push(curr);
-        }
-        return prev;
-      },{complete:[], active:[]});
-      return allTasks
+      const allTasks = this.task.reduce(
+        (prev, curr) => {
+          if (curr.complete) {
+            prev.complete.push(curr);
+          } else {
+            prev.active.push(curr);
+          }
+          return prev;
+        },
+        { complete: [], active: [] }
+      );
+      return allTasks;
     }
   },
   created() {

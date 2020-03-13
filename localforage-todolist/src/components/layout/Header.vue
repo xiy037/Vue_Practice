@@ -10,7 +10,7 @@ export default {
 h1 {
   margin: 0;
   padding: 10px;
-  background-color: #405872;
+  background-color: #41b883;
   color: white;
   font-size: 30px;
 }
