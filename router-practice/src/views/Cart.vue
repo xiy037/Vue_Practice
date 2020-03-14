@@ -22,14 +22,16 @@
       In this page, total price is {{sumCurrent(currentPageData)}} RMB 
       by summing up {{currentPageData.length}} items.
       </div>
-      <span slot="action" slot-scope="record">
-        <a-button v-on:click="deleteItem(record)">Delete</a-button>
+      <span slot="action" slot-scope="text, record, index">
+        <a-button v-on:click="deleteItem(index)">Delete</a-button>
       </span>
     </a-table>
   </div>
 </template>
 <script>
 import CartSearch from "@/components/CartSearch.vue";
+import store from "../assets/store"
+import hub from "../assets/eventHub"
 //用antd的tabale，cols中的dataIndex对应dataSource内的属性名
 
 export default {
@@ -64,64 +66,7 @@ export default {
           scopedSlots: { customRender: "action" }
         }
       ],
-      shoppingList: [
-        {
-          id: 1,
-          imgUrl: "xxxxx",
-          content: "spring blue dress",
-          store: "women store",
-          count: 1,
-          price: 169
-        },
-        {
-          id: 2,
-          imgUrl: "xxxxx",
-          content: "denim pants",
-          store: "women store",
-          count: 2,
-          price: 500
-        },
-        {
-          id: 3,
-          imgUrl: "xxxxx",
-          content: "black slim pants",
-          store: "Urban Outfitter",
-          count: 1,
-          price: 399
-        },
-        {
-          id: 4,
-          imgUrl: "xxxxx",
-          content: "graphical T-shirt",
-          store: "Uniqle",
-          count: 1,
-          price: 199
-        },
-        {
-          id: 5,
-          imgUrl: "xxxxx",
-          content: "graphical T-shirt",
-          store: "Uniqle",
-          count: 1,
-          price: 199
-        },
-        {
-          id: 6,
-          imgUrl: "xxxxx",
-          content: "graphical T-shirt",
-          store: "Muji",
-          count: 1,
-          price: 199
-        },
-        {
-          id: 7,
-          imgUrl: "xxxxx",
-          content: "bag",
-          store: "Muji",
-          count: 1,
-          price: 299
-        }
-      ],
+      shoppingList: store.cart,
       showSearch: true,
       pagination: {
         pageSize: 5,
@@ -145,6 +90,16 @@ export default {
       return arr.reduce((prev, curr) => {
         return (prev += curr.price);
       }, 0);
+    },
+    addCart(record) {
+      const arr = this.shoppingList.filter((el) => el.id === record.id);
+      if (arr.length === 0) {
+        const newItem = {...record};
+        newItem.count = 1;
+        this.shoppingList.push(newItem);
+      }
+      console.log(arr);
+      console.log(this.shoppingList);
     }
   },
   computed: {
@@ -158,6 +113,15 @@ export default {
         return (prev += curr.count);
       }, 0);
     }
+  },
+  created() {
+    console.log("cart created");
+    //数据必须存在store里才能成功渲染，如果直接改这个页面的数据，数据更改但不会渲染
+    //另外不断切换路由，事件会累积触发。
+    hub.$on("add", this.addCart);
+  },
+  beforeDestroy() {
+    console.log("cart before destroy"); 
   }
 };
 </script>
