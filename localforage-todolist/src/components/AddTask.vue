@@ -1,5 +1,7 @@
 <template>
 <div class="add-task-container">
+  <div class="item">Categorized</div>
+  <a-switch size="small" class="item" @change="switchStatus"/>
   <a-button  class="add-btn" @click="showModal"><a-icon type="plus" />New Task</a-button>
   <a-modal title="New Task" v-model="visible" @ok="addItem">
   <a-form layout="inline">
@@ -46,6 +48,9 @@ export default {
         alert("Please Enter Task First!")
       }
       this.visible = false;
+    },
+    switchStatus(checked) {
+      this.$emit("switch", checked);
     }
   }
 };
@@ -55,11 +60,15 @@ export default {
   padding: 0 10px;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
 .add-btn {
   color: #41b883;
   font-weight: 600;
   border: none;
   background: transparent;
+}
+.item {
+  margin: 0 5px;
 }
 </style>
