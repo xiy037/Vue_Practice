@@ -167,18 +167,7 @@ export default {
       return allTags;
     },
     tasksWithStatus() {
-      const allTasks = this.task.reduce(
-        (prev, curr) => {
-          if (curr.complete) {
-            prev.complete.push(curr);
-          } else {
-            prev.active.push(curr);
-          }
-          return prev;
-        },
-        { complete: [], active: [] }
-      );
-      return allTasks;
+      return sortArr(this.task);
     }
   },
   created() {
@@ -193,7 +182,7 @@ export default {
       this.noResult = false;
     }
   }
-};
+}
 </script>
 
 <style lang="less">
