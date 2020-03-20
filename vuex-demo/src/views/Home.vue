@@ -14,7 +14,7 @@
     <div class="transition-demo">
       <button @click="showMsg = !showMsg">hide/show</button>
       <transition name="trans">
-        <div v-if="showMsg">Transition Message</div>
+        <div v-if="showMsg" class="msg">Transition Message</div>
       </transition>
     </div>
   </div>
@@ -65,6 +65,9 @@ export default {
   font-size: 20px;
   background-color: #57c192;
   font-weight: 500;
+}
+.msg {
+  color: green;
 }
 .trans-enter,
 .trans-leave-to {
